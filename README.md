@@ -1,6 +1,6 @@
 # Retool AWS ECS Fargate Terraform module
 
-Terrafom module which creates a on-premise [Retool](https://retool.com/) deployment using AWS ECS Fargate. Inspired by the official Retool CloudFormation [documentation](https://github.com/tryretool/retool-onpremise#deploying-on-ecs-with-fargate)
+Terrafom module which creates an on-premise [Retool](https://retool.com/) deployment using AWS ECS Fargate. Inspired by the official Retool CloudFormation [documentation](https://github.com/tryretool/retool-onpremise#deploying-on-ecs-with-fargate).
 
 <p align="center">
     <a href="https://retool.com/"><img src="https://raw.githubusercontent.com/tryretool/brand-assets/master/Logos/logo-full-black.png" alt="Retool logo" height="100"></a> <br>
