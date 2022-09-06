@@ -417,7 +417,7 @@ resource "aws_iam_role" "retool_execution_role" {
 }
 
 resource "aws_route53_record" "retool_custom_host_url" {
-  count = var.retool_custom_host_url != null && var.route_53_zone_id != null ? 1 : 0
+  count   = var.retool_custom_host_url != null && var.route_53_zone_id != null ? 1 : 0
   name    = var.retool_custom_host_url
   type    = "A"
   zone_id = var.route_53_zone_id

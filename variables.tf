@@ -280,10 +280,10 @@ variable "retool_ecs_service_count" {
 
 variable "retool_custom_host_url" {
   description = "Specify a custom hostname that will be used to create a custom url instead of the Load Balancer address. e.g. retool"
-  default = null
+  default     = null
 }
 
 variable "route_53_zone_id" {
   description = "AWS Route53 zone_id to create retool_custom_url record in"
-  default = null
+  default     = null
 }
