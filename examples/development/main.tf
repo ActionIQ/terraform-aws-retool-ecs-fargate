@@ -12,10 +12,3 @@ module "retool-self-hosted" {
   retool_jobs_runner_task_container_node_env = "development"
 
 }
-
-output "retool_stack_name" {
-  value = module.retool-self-hosted.stack_name
-}
-output "retool_alb_dns" {
-  value = module.retool-self-hosted.retool_alb_dns
-}

@@ -8,10 +8,3 @@ module "retool-self-hosted" {
   retool_ecs_service_subnet = ["subnet-xxxx", "subnet-xxxx", "subnet-xxxx", "subnet-xxxx", "subnet-xxxx", "subnet-xxxx"]
   retool_db_subnet_ids = ["subnet-xxxx", "subnet-xxxx", "subnet-xxxx", "subnet-xxxx", "subnet-xxxx", "subnet-xxxx"]
 }
-
-output "retool_stack_name" {
-  value = module.retool-self-hosted.stack_name
-}
-output "retool_alb_dns" {
-  value = module.retool-self-hosted.retool_alb_dns
-}
