@@ -7,4 +7,6 @@ module "retool-self-hosted" {
   retool_jobs_runner_ecs_service_subnet = ["subnet-xxxx", "subnet-xxxx", "subnet-xxxx", "subnet-xxxx", "subnet-xxxx", "subnet-xxxx"]
   retool_ecs_service_subnet             = ["subnet-xxxx", "subnet-xxxx", "subnet-xxxx", "subnet-xxxx", "subnet-xxxx", "subnet-xxxx"]
   retool_db_subnet_ids                  = ["subnet-xxxx", "subnet-xxxx", "subnet-xxxx", "subnet-xxxx", "subnet-xxxx", "subnet-xxxx"]
+  retool_custom_host_url                = "fancy-url"
+  route_53_zone_id                      = "Z12345678901234567890"
 }
