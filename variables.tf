@@ -5,9 +5,15 @@ variable "retool_licence" {
 }
 
 locals {
-  stack_name    = "${var.stack_name}-${random_id.stack_name_random.hex}"
-  database_name = var.database_name
-  retool_image  = "tryretool/backend:${var.retool_release_version}"
+  stack_name                          = "${var.stack_name}-${random_id.stack_name_random.hex}"
+  database_name                       = var.database_name
+  retool_image                        = "tryretool/backend:${var.retool_release_version}"
+  retool_alb_ingress_port             = var.alb_listener_certificate_arn != null ? "443" : var.retool_alb_ingress_port
+  retool_alb_listener_protocol        = var.alb_listener_certificate_arn != null ? "HTTPS" : var.aws_lb_listener_protocol
+  retool_alb_listener_ssl_policy      = var.alb_listener_certificate_arn != null ? var.alb_listener_ssl_policy : null
+  retool_alb_listener_certificate_arn = var.alb_listener_certificate_arn
+  retool_url_port                     = local.retool_alb_ingress_port != "443" ? ":${local.retool_alb_ingress_port}" : ""
+
   retool_jwt_secret = {
     password = random_password.retool_jwt_secret.result
   }
@@ -294,4 +300,16 @@ variable "route_53_zone_id" {
   description = "AWS Route53 zone_id to create retool_custom_url record in"
   type        = string
   default     = null
+}
+
+variable "alb_listener_certificate_arn" {
+  description = "Certificate Manager ARN use in ALB listener"
+  type        = string
+  default     = null
+}
+
+variable "alb_listener_ssl_policy" {
+  description = "retool_alb_listener_ssl_policy"
+  type        = string
+  default     = "ELBSecurityPolicy-2016-08"
 }

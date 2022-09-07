@@ -8,7 +8,7 @@ resource "aws_security_group" "retool_alb" {
   vpc_id      = var.vpc_id
 
   ingress {
-    from_port   = var.retool_alb_ingress_port
+    from_port   = local.retool_alb_ingress_port
     protocol    = "tcp"
     to_port     = var.retool_task_container_port
     cidr_blocks = [var.retool_alb_sg_ingress_cidr_blocks]
@@ -245,8 +245,10 @@ resource "aws_lb" "retool_alb" {
 
 resource "aws_lb_listener" "retool_alb" {
   load_balancer_arn = aws_lb.retool_alb.arn
-  port              = var.retool_alb_ingress_port
-  protocol          = var.aws_lb_listener_protocol
+  port              = local.retool_alb_ingress_port
+  protocol          = local.retool_alb_listener_protocol
+  ssl_policy        = local.retool_alb_listener_ssl_policy
+  certificate_arn   = local.retool_alb_listener_certificate_arn
   default_action {
     type             = "forward"
     target_group_arn = aws_alb_target_group.retool_alb.arn
