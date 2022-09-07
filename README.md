@@ -10,4 +10,3 @@ Terrafom module which creates an on-premise [Retool](https://retool.com/) deploy
 # Deploying Retool on-premise
 
 [Deploying Retool on-premise](https://docs.retool.com/docs/self-hosted) ensures that all access to internal data is managed within your own cloud environment. It also provides the flexibility to control how Retool is setup within your infrastructure, the ability to configure logging, and access to enable custom SAML SSO using providers like Okta and Active Directory.
-

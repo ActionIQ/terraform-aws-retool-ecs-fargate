@@ -3,8 +3,8 @@ resource "random_id" "stack_name_random" {
 }
 
 resource "aws_security_group" "retool_alb" {
-  name        = "${local.stack-name}-alb"
-  description = "${local.stack-name} load balancer security group"
+  name        = "${local.stack_name}-alb"
+  description = "${local.stack_name} load balancer security group"
   vpc_id      = var.vpc_id
 
   ingress {
@@ -23,17 +23,17 @@ resource "aws_security_group" "retool_alb" {
   }
 
   tags = {
-    Name = "${local.stack-name}-alb"
+    Name = "${local.stack_name}-alb"
   }
 }
 
 resource "aws_cloudwatch_log_group" "retool_log_group" {
-  name = local.stack-name
+  name = local.stack_name
 }
 
 resource "aws_security_group" "retool_rds" {
-  name        = "${local.stack-name}-rds"
-  description = "${local.stack-name} database security group"
+  name        = "${local.stack_name}-rds"
+  description = "${local.stack_name} database security group"
   vpc_id      = var.vpc_id
 
   ingress {
@@ -52,17 +52,17 @@ resource "aws_security_group" "retool_rds" {
   }
 
   tags = {
-    Name = "${local.stack-name}-rds"
+    Name = "${local.stack_name}-rds"
   }
 }
 
 resource "aws_db_subnet_group" "retool_db_subnet_sg" {
-  name       = "${local.stack-name}-db_subnet_sg"
+  name       = "${local.stack_name}-db_subnet_sg"
   subnet_ids = var.retool_db_subnet_ids
 }
 
 resource "aws_ecs_cluster" "retool_ecs_cluster" {
-  name = local.stack-name
+  name = local.stack_name
   setting {
     name  = "containerInsights"
     value = "enabled"
@@ -71,7 +71,7 @@ resource "aws_ecs_cluster" "retool_ecs_cluster" {
 }
 
 resource "aws_ecs_task_definition" "retool_task" {
-  family                   = "${local.stack-name}-backend"
+  family                   = "${local.stack_name}-backend"
   requires_compatibilities = ["FARGATE"]
   network_mode             = var.retool_task_network_mode
   cpu                      = var.retool_task_cpu
@@ -120,7 +120,7 @@ TASK_DEFINITION
 }
 
 resource "aws_ecs_task_definition" "retool_jobs_runner_task" {
-  family                   = "${local.stack-name}-jobs-runner"
+  family                   = "${local.stack_name}-jobs-runner"
   requires_compatibilities = ["FARGATE"]
   network_mode             = var.retool_jobs_runner_task_network_mode
   cpu                      = var.retool_jobs_runner_task_cpu
@@ -171,7 +171,7 @@ resource "random_password" "retool_jwt_secret" {
 }
 
 resource "aws_secretsmanager_secret" "retool_jwt_secret" {
-  name = "${local.stack-name}-jwt-secret"
+  name = "${local.stack_name}-jwt-secret"
 }
 
 resource "aws_secretsmanager_secret_version" "retool_jwt_secret" {
@@ -187,7 +187,7 @@ resource "random_password" "retool_encryption_key_secret" {
 }
 
 resource "aws_secretsmanager_secret" "retool_encryption_key_secret" {
-  name = "${local.stack-name}-encryption-key-secret"
+  name = "${local.stack_name}-encryption-key-secret"
 }
 
 resource "aws_secretsmanager_secret_version" "retool_encryption_key_secret" {
@@ -203,7 +203,7 @@ resource "random_password" "retool_rds_secret" {
 }
 
 resource "aws_secretsmanager_secret" "retool_rds_secret" {
-  name = "${local.stack-name}-rds-secret"
+  name = "${local.stack_name}-rds-secret"
 }
 
 resource "aws_secretsmanager_secret_version" "retool_rds_secret" {
@@ -212,7 +212,7 @@ resource "aws_secretsmanager_secret_version" "retool_rds_secret" {
 }
 
 resource "aws_rds_cluster" "retool_postgresql" {
-  cluster_identifier      = "${local.stack-name}-cluster"
+  cluster_identifier      = "${local.stack_name}-cluster"
   db_subnet_group_name    = aws_db_subnet_group.retool_db_subnet_sg.name
   engine                  = var.retool_rds_cluster_engine
   engine_version          = var.retool_rds_cluster_engine_version
@@ -228,7 +228,7 @@ resource "aws_rds_cluster" "retool_postgresql" {
 
 resource "aws_rds_cluster_instance" "retool_cluster_instances" {
   count              = var.retool_rds_cluster_instance_count
-  identifier         = "${local.stack-name}-aurora-cluster-${count.index}"
+  identifier         = "${local.stack_name}-aurora-cluster-${count.index}"
   cluster_identifier = aws_rds_cluster.retool_postgresql.id
   instance_class     = var.retool_rds_cluster_instance_class
   engine             = aws_rds_cluster.retool_postgresql.engine
@@ -236,7 +236,7 @@ resource "aws_rds_cluster_instance" "retool_cluster_instances" {
 }
 
 resource "aws_lb" "retool_alb" {
-  name               = local.stack-name
+  name               = local.stack_name
   internal           = true
   load_balancer_type = "application"
   security_groups    = [aws_security_group.retool_alb.id]
@@ -269,7 +269,7 @@ resource "aws_alb_listener_rule" "retool_alb" {
 }
 
 resource "aws_alb_target_group" "retool_alb" {
-  name                 = "${local.stack-name}-tg"
+  name                 = "${local.stack_name}-tg"
   port                 = var.retool_task_container_port
   protocol             = var.aws_alb_target_group_protocol
   vpc_id               = var.vpc_id
@@ -287,7 +287,7 @@ resource "aws_alb_target_group" "retool_alb" {
 }
 
 resource "aws_ecs_service" "retool_ecs_service" {
-  name                               = "${local.stack-name}-ecs-service"
+  name                               = "${local.stack_name}-ecs-service"
   cluster                            = aws_ecs_cluster.retool_ecs_cluster.arn
   deployment_maximum_percent         = var.retool_ecs_service_deploy_max
   deployment_minimum_healthy_percent = var.retool_ecs_service_deploy_min_health
@@ -310,7 +310,7 @@ resource "aws_ecs_service" "retool_ecs_service" {
 }
 
 resource "aws_ecs_service" "retool_jobs_runner_ecs_service" {
-  name            = "${local.stack-name}-jobs-runner-ecs-service"
+  name            = "${local.stack_name}-jobs-runner-ecs-service"
   cluster         = aws_ecs_cluster.retool_ecs_cluster.arn
   task_definition = aws_ecs_task_definition.retool_jobs_runner_task.arn
   desired_count   = 1
@@ -323,7 +323,7 @@ resource "aws_ecs_service" "retool_jobs_runner_ecs_service" {
 }
 
 resource "aws_iam_role" "retool_service_role" {
-  name = "${local.stack-name}-service-role"
+  name = "${local.stack_name}-service-role"
   path = "/"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -339,7 +339,7 @@ resource "aws_iam_role" "retool_service_role" {
   })
 
   inline_policy {
-    name = "${local.stack-name}-env-service-policy"
+    name = "${local.stack_name}-env-service-policy"
 
     policy = jsonencode({
       Version = "2012-10-17"
@@ -362,7 +362,7 @@ resource "aws_iam_role" "retool_service_role" {
 }
 
 resource "aws_iam_role" "retool_task_role" {
-  name = "${local.stack-name}-task-role"
+  name = "${local.stack_name}-task-role"
   path = "/"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -379,7 +379,7 @@ resource "aws_iam_role" "retool_task_role" {
 }
 
 resource "aws_iam_role" "retool_execution_role" {
-  name = "${local.stack-name}-execution-role"
+  name = "${local.stack_name}-execution-role"
   path = "/"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -395,7 +395,7 @@ resource "aws_iam_role" "retool_execution_role" {
   })
 
   inline_policy {
-    name = "${local.stack-name}-env-execution-policy"
+    name = "${local.stack_name}-env-execution-policy"
 
     policy = jsonencode({
       Version = "2012-10-17"
