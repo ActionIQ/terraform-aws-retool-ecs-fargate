@@ -5,7 +5,7 @@ variable "retool_licence" {
 }
 
 locals {
-  stack-name    = "${var.stack-name}-${random_id.stack_name_random.hex}"
+  stack_name    = "${var.stack_name}-${random_id.stack_name_random.hex}"
   database_name = var.database_name
   retool_image  = "tryretool/backend:${var.retool_release_version}"
   retool_jwt_secret = {
@@ -26,7 +26,7 @@ variable "aws_region" {
   default     = "us-east-1"
 }
 
-variable "stack-name" {
+variable "stack_name" {
   description = "Base Retool stack name"
   type        = string
   default     = "retool-self-hosted"
@@ -130,6 +130,7 @@ variable "retool_task_container_name" {
 
 variable "retool_task_container_port" {
   description = "Retool task listening port"
+  type        = number
   default     = "3000"
 }
 
@@ -255,35 +256,42 @@ variable "retool_db_subnet_ids" {
 
 variable "aws_lb_listener_protocol" {
   description = "AWS ALB listening protocol e.g HTTP, HTTPS etc"
+  type        = string
   default     = "HTTP"
 }
 
 variable "aws_alb_target_group_protocol" {
   description = "Protocol ALB should use to talk with target group e.g HTTP, HTTPS etc"
+  type        = string
   default     = "HTTP"
 }
 
 variable "retool_ecs_service_deploy_max" {
   description = "Upper limit (as a percentage of the service's desiredCount) of the number of running tasks that can be running in a service during a deployment"
+  type        = number
   default     = "250"
 }
 
 variable "retool_ecs_service_deploy_min_health" {
   description = "Lower limit (as a percentage of the service's desiredCount) of the number of running tasks that must remain running and healthy in a service during a deployment"
+  type        = number
   default     = "50"
 }
 
 variable "retool_ecs_service_count" {
   description = "Number of instances of the task definition to place and keep running"
+  type        = number
   default     = "2"
 }
 
 variable "retool_custom_host_url" {
   description = "Specify a custom hostname that will be used to create a custom url instead of the Load Balancer address. e.g. retool"
+  type        = string
   default     = null
 }
 
 variable "route_53_zone_id" {
   description = "AWS Route53 zone_id to create retool_custom_url record in"
+  type        = string
   default     = null
 }

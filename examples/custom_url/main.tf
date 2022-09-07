@@ -1,5 +1,5 @@
-module "retool-self-hosted" {
-  source                                = "terraform-aws-retool-ecs-fargate"
+module "retool_self_hosted" {
+  source                                = "ActionIQ/retool-ecs-fargate/aws"
   retool_licence                        = "12345678-1234-1234-1234-123456789012"
   vpc_id                                = "vpc-xxxx"
   availability_zones                    = ["us-east-1a", "us-east-1b", "us-east-1c", "us-east-1d", "us-east-1e", "us-east-1f"]
