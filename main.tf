@@ -11,7 +11,7 @@ resource "aws_security_group" "retool_alb" {
     from_port   = local.retool_alb_ingress_port
     protocol    = "tcp"
     to_port     = var.retool_task_container_port
-    cidr_blocks = [var.retool_alb_sg_ingress_cidr_blocks]
+    cidr_blocks = var.retool_alb_sg_ingress_cidr_blocks
   }
 
   egress {
@@ -19,7 +19,7 @@ resource "aws_security_group" "retool_alb" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = [var.retool_alb_sg_egress_cidr_blocks]
+    cidr_blocks = var.retool_alb_sg_egress_cidr_blocks
   }
 
   tags = {
@@ -40,7 +40,7 @@ resource "aws_security_group" "retool_rds" {
     from_port   = var.postgresql_db_port
     protocol    = "tcp"
     to_port     = var.postgresql_db_port
-    cidr_blocks = [var.retool_rds_sg_ingress_cidr_blocks]
+    cidr_blocks = var.retool_rds_sg_ingress_cidr_blocks
   }
 
   egress {
@@ -48,7 +48,7 @@ resource "aws_security_group" "retool_rds" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = [var.retool_rds_sg_egress_cidr_blocks]
+    cidr_blocks = var.retool_rds_sg_egress_cidr_blocks
   }
 
   tags = {

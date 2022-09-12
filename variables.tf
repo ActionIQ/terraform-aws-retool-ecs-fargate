@@ -64,26 +64,26 @@ variable "retool_release_version" {
 
 variable "retool_alb_sg_ingress_cidr_blocks" {
   description = "Cidr block allowed to ingress the Retool ALB"
-  type        = string
-  default     = "0.0.0.0/0"
+  type        = list(string)
+  default     = ["0.0.0.0/0"]
 }
 
 variable "retool_alb_sg_egress_cidr_blocks" {
   description = "Cidr block allowed to egress the Retool ALB"
-  type        = string
-  default     = "0.0.0.0/0"
+  type        = list(string)
+  default     = ["0.0.0.0/0"]
 }
 
 variable "retool_rds_sg_ingress_cidr_blocks" {
   description = "Cidr block allowed to ingress the Retool RDS DB"
-  type        = string
-  default     = "0.0.0.0/0"
+  type        = list(string)
+  default     = ["0.0.0.0/0"]
 }
 
 variable "retool_rds_sg_egress_cidr_blocks" {
   description = "Cidr block allowed to egress the Retool RDS DB"
-  type        = string
-  default     = "0.0.0.0/0"
+  type        = list(string)
+  default     = ["0.0.0.0/0"]
 }
 
 variable "retool_task_network_mode" {
