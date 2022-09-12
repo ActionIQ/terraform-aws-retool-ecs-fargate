@@ -163,11 +163,10 @@ TASK_DEFINITION
   tags                     = {}
 }
 
-# TODO: Fix special
 resource "random_password" "retool_jwt_secret" {
-  length = 16
-  #  special = true
-  #  override_special = "/@\" "
+  length           = 16
+  special          = true
+  override_special = "!#$%&*()-_=+[]{}<>:?"
 }
 
 resource "aws_secretsmanager_secret" "retool_jwt_secret" {
@@ -179,11 +178,10 @@ resource "aws_secretsmanager_secret_version" "retool_jwt_secret" {
   secret_string = jsonencode(local.retool_jwt_secret)
 }
 
-# TODO: Fix special
 resource "random_password" "retool_encryption_key_secret" {
-  length = 16
-  #  special = true
-  #  override_special = "/@\" "
+  length           = 16
+  special          = true
+  override_special = "!#$%&*()-_=+[]{}<>:?"
 }
 
 resource "aws_secretsmanager_secret" "retool_encryption_key_secret" {
@@ -195,11 +193,10 @@ resource "aws_secretsmanager_secret_version" "retool_encryption_key_secret" {
   secret_string = jsonencode(local.retool_encryption_key_secret)
 }
 
-# TODO: Fix special
 resource "random_password" "retool_rds_secret" {
-  length = 16
-  #  special = true
-  #  override_special = "@/\""
+  length           = 16
+  special          = true
+  override_special = "!#$%&*()-_=+[]{}<>:?"
 }
 
 resource "aws_secretsmanager_secret" "retool_rds_secret" {
