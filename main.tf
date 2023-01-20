@@ -82,7 +82,7 @@ resource "aws_ecs_task_definition" "retool_task" {
 [
   {
     "command": ["./docker_scripts/start_api.sh"],
-    "environment": ${local.ecs_env_vars}
+    "environment": ${local.ecs_env_vars},
     "logConfiguration": {
       "logDriver": "${var.retool_ecs_tasks_logdriver}",
       "options": {

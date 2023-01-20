@@ -27,7 +27,7 @@ locals {
     {"name": "ENCRYPTION_KEY", "value": "${local.retool_encryption_key_secret.password}"},
     {"name": "LICENSE_KEY", "value": "${var.retool_licence}"},
     {"name": "COOKIE_INSECURE", "value": "${var.retool_task_container_cookie_insecure}"}
-  ],
+  ]
 
   retool_jwt_secret = {
     password = random_password.retool_jwt_secret.result
