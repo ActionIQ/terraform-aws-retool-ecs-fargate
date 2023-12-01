@@ -59,7 +59,7 @@ variable "postgresql_db_port" {
 variable "retool_release_version" {
   description = "Official Retool release version found: https://github.com/tryretool/retool-onpremise#select-a-retool-version-number"
   type        = string
-  default     = "3.16.9"
+  default     = "2.116"
 }
 
 variable "retool_alb_sg_ingress_cidr_blocks" {
