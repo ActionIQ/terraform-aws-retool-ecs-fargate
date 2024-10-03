@@ -82,21 +82,7 @@ resource "aws_ecs_task_definition" "retool_task" {
 [
   {
     "command": ["./docker_scripts/start_api.sh"],
-    "environment": [
-      {"name": "NODE_ENV", "value": "${var.retool_task_container_node_env}"},
-      {"name": "SERVICE_TYPE", "value": "${var.retool_task_container_service_type},DB_CONNECTOR"},
-      {"name": "FORCE_DEPLOYMENT", "value": "${var.retool_task_container_force_deployment}"},
-      {"name": "POSTGRES_DB", "value": "${local.database_name}"},
-      {"name": "POSTGRES_HOST", "value": "${aws_rds_cluster.retool_postgresql.endpoint}"},
-      {"name": "POSTGRES_SSL_ENABLED", "value": "${var.postgresql_ssl_enabled}"},
-      {"name": "POSTGRES_PORT", "value": "${var.postgresql_db_port}"},
-      {"name": "POSTGRES_USER", "value": "${local.retool_rds_secret.username}"},
-      {"name": "POSTGRES_PASSWORD", "value": "${local.retool_rds_secret.password}"},
-      {"name": "JWT_SECRET", "value": "${local.retool_jwt_secret.password}"},
-      {"name": "ENCRYPTION_KEY", "value": "${local.retool_encryption_key_secret.password}"},
-      {"name": "LICENSE_KEY", "value": "${var.retool_licence}"},
-      {"name": "COOKIE_INSECURE", "value": "${var.retool_task_container_cookie_insecure}"}
-    ],
+    "environment": ${local.ecs_env_vars},
     "logConfiguration": {
       "logDriver": "${var.retool_ecs_tasks_logdriver}",
       "options": {
