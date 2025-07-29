@@ -215,7 +215,7 @@ variable "retool_rds_cluster_engine" {
 variable "retool_rds_cluster_engine_version" {
   description = "AWS RDS Cluster engine version - this is despendent on var.retool_rds_cluster_engine"
   type        = number
-  default     = "12.16"
+  default     = "12.22"
 }
 
 variable "retool_rds_cluster_instance_count" {
