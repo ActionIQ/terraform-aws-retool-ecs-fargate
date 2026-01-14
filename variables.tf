@@ -13,6 +13,21 @@ locals {
   retool_alb_listener_ssl_policy      = var.alb_listener_certificate_arn != null ? var.alb_listener_ssl_policy : null
   retool_alb_listener_certificate_arn = var.alb_listener_certificate_arn
   retool_url_port                     = local.retool_alb_ingress_port != "443" ? ":${local.retool_alb_ingress_port}" : ""
+  ecs_env_vars = [
+    { "name" : "NODE_ENV", "value" : "${var.retool_task_container_node_env}" },
+    { "name" : "SERVICE_TYPE", "value" : "${var.retool_task_container_service_type},DB_CONNECTOR" },
+    { "name" : "FORCE_DEPLOYMENT", "value" : "${var.retool_task_container_force_deployment}" },
+    { "name" : "POSTGRES_DB", "value" : "${local.database_name}" },
+    { "name" : "POSTGRES_HOST", "value" : "${aws_rds_cluster.retool_postgresql.endpoint}" },
+    { "name" : "POSTGRES_SSL_ENABLED", "value" : "${var.postgresql_ssl_enabled}" },
+    { "name" : "POSTGRES_PORT", "value" : "${var.postgresql_db_port}" },
+    { "name" : "POSTGRES_USER", "value" : "${local.retool_rds_secret.username}" },
+    { "name" : "POSTGRES_PASSWORD", "value" : "${local.retool_rds_secret.password}" },
+    { "name" : "JWT_SECRET", "value" : "${local.retool_jwt_secret.password}" },
+    { "name" : "ENCRYPTION_KEY", "value" : "${local.retool_encryption_key_secret.password}" },
+    { "name" : "LICENSE_KEY", "value" : "${var.retool_licence}" },
+    { "name" : "COOKIE_INSECURE", "value" : "${var.retool_task_container_cookie_insecure}" }
+  ]
 
   retool_jwt_secret = {
     password = random_password.retool_jwt_secret.result
